@@ -3,6 +3,7 @@ package main
 import (
 	"go-gin-api/database"
 	"go-gin-api/database/migration"
+	"go-gin-api/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +15,9 @@ func main() {
 
 	database.DBInitialization()
 	migration.RunMigration()
+
+	router := app.Group("/api/v1")
+	routes.RouteInitialization(router)
 
 	app.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(404, gin.H{
